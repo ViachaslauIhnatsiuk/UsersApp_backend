@@ -1,13 +1,14 @@
-const User = require('../models/userModel');
-const { Types } = require('mongoose');
+import User from '../models/userModel';
+import { Types } from 'mongoose';
+import { Response, Request } from 'express';
 
-const getUsers = async (request, response) => {
+const getUsers = async (request: Request, response: Response) => {
   const users = await User.find({}).sort({ createdAt: -1 });
 
   response.status(200).json(users);
 };
 
-const getUser = async (request, response) => {
+const getUser = async (request: Request, response: Response) => {
   const { id } = request.params;
 
   if (!Types.ObjectId.isValid(id)) {
@@ -23,7 +24,7 @@ const getUser = async (request, response) => {
   response.status(200).json(user);
 };
 
-const createUser = async (request, response) => {
+const createUser = async (request: Request, response: Response) => {
   const { name, email, password } = request.body;
 
   try {
@@ -34,7 +35,7 @@ const createUser = async (request, response) => {
   }
 };
 
-const deleteUser = async (request, response) => {
+const deleteUser = async (request: Request, response: Response) => {
   const { id } = request.params;
 
   if (!Types.ObjectId.isValid(id)) {
@@ -50,7 +51,7 @@ const deleteUser = async (request, response) => {
   response.status(200).json(user);
 };
 
-const updateUser = async (request, response) => {
+const updateUser = async (request: Request, response: Response) => {
   const { id } = request.params;
 
   if (!Types.ObjectId.isValid(id)) {
@@ -71,10 +72,4 @@ const updateUser = async (request, response) => {
   response.status(200).json(user);
 };
 
-module.exports = {
-  getUsers,
-  getUser,
-  createUser,
-  deleteUser,
-  updateUser,
-};
+export { getUsers, getUser, createUser, deleteUser, updateUser };

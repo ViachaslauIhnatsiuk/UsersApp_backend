@@ -1,7 +1,7 @@
 require('dotenv').config();
-const express = require('express');
-const mongoose = require('mongoose');
-const usersRoutes = require('./src/routes/users');
+import express from 'express';
+import mongoose from 'mongoose';
+import { usersRoutes } from './routes/users';
 
 const app = express();
 
@@ -15,7 +15,7 @@ app.use('/users', usersRoutes);
 
 mongoose.set('strictQuery', false);
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(process.env.MONGO_URI as string)
   .then(() => {
     app.listen(process.env.PORT, () => {
       console.log('connected to DB');
