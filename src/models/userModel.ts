@@ -41,7 +41,7 @@ userSchema.statics.signup = async function (
   }
 
   if (!validator.isEmail(email)) {
-    throw Error('Email si not valid');
+    throw Error('Email is not valid');
   }
 
   const exists = await this.findOne({ email });
@@ -60,6 +60,30 @@ userSchema.statics.signup = async function (
     isBlocked,
     isChecked,
   });
+
+  return user;
+};
+
+userSchema.statics.signin = async function (
+  name: string,
+  email: string,
+  password: string
+) {
+  if (!name || !email || !password) {
+    throw Error('All fields must be filled');
+  }
+
+  const user = await this.findOne({ email });
+
+  if (!user) {
+    throw Error('Incorrect email');
+  }
+
+  const match = await bcrypt.compare(password, user.password);
+
+  if (!match) {
+    throw Error('Incorrect password');
+  }
 
   return user;
 };

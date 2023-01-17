@@ -43,6 +43,20 @@ const signUp = async (request: Request, response: Response) => {
   }
 };
 
+const signIn = async (request: Request, response: Response) => {
+  const { name, email, password } = request.body;
+
+  try {
+    const user = await User.signin(name, email, password);
+
+    const token = createToken(user._id);
+
+    response.status(200).json({ email, token });
+  } catch (error) {
+    response.status(400).json({ error: error.message });
+  }
+};
+
 const deleteUser = async (request: Request, response: Response) => {
   const { id } = request.params;
 
@@ -80,4 +94,4 @@ const updateUser = async (request: Request, response: Response) => {
   response.status(200).json(user);
 };
 
-export { getUsers, getUser, signUp, deleteUser, updateUser };
+export { getUsers, getUser, signUp, signIn, deleteUser, updateUser };

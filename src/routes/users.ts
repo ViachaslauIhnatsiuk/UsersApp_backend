@@ -3,6 +3,7 @@ import {
   getUsers,
   getUser,
   signUp,
+  signIn,
   deleteUser,
   updateUser,
 } from '../controllers/userController';
@@ -14,6 +15,8 @@ usersRoutes.get('/', getUsers);
 usersRoutes.get('/:id', getUser);
 
 usersRoutes.post('/signup', signUp);
+
+usersRoutes.post('/signin', signIn);
 
 usersRoutes.delete('/:id', deleteUser);
 
