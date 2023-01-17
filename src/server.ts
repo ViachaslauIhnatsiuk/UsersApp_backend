@@ -3,6 +3,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import { usersRoutes } from './routes/users';
+import { authRoutes } from './routes/auth';
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use((request, response, next) => {
 });
 
 app.use('/users', usersRoutes);
+app.use('/', authRoutes);
 
 mongoose.set('strictQuery', false);
 mongoose
