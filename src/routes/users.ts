@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import {
-  createUser,
   getUsers,
   getUser,
+  signUp,
   deleteUser,
   updateUser,
 } from '../controllers/userController';
@@ -13,7 +13,7 @@ usersRoutes.get('/', getUsers);
 
 usersRoutes.get('/:id', getUser);
 
-usersRoutes.post('/', createUser);
+usersRoutes.post('/signup', signUp);
 
 usersRoutes.delete('/:id', deleteUser);
 

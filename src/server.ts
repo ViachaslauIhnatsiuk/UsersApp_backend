@@ -1,13 +1,14 @@
 require('dotenv').config();
 import express from 'express';
 import mongoose from 'mongoose';
+import cors from 'cors';
 import { usersRoutes } from './routes/users';
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 app.use((request, response, next) => {
-  console.log(request.path, request.method);
   next();
 });
 

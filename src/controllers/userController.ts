@@ -1,4 +1,4 @@
-import User from '../models/userModel';
+const User = require('../models/userModel');
 import { Types } from 'mongoose';
 import { Response, Request } from 'express';
 
@@ -24,12 +24,12 @@ const getUser = async (request: Request, response: Response) => {
   response.status(200).json(user);
 };
 
-const createUser = async (request: Request, response: Response) => {
+const signUp = async (request: Request, response: Response) => {
   const { name, email, password } = request.body;
 
   try {
-    const user = await User.create({ name, email, password });
-    response.status(200).json(user);
+    const user = await User.signup(name, email, password);
+    response.status(200).json({ email, user });
   } catch (error) {
     response.status(400).json({ error: error.message });
   }
@@ -72,4 +72,4 @@ const updateUser = async (request: Request, response: Response) => {
   response.status(200).json(user);
 };
 
-export { getUsers, getUser, createUser, deleteUser, updateUser };
+export { getUsers, getUser, signUp, deleteUser, updateUser };
