@@ -25,6 +25,10 @@ const userSchema = new Schema(
       type: Boolean,
       required: true,
     },
+    lastSignin: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );
@@ -34,7 +38,8 @@ userSchema.statics.signup = async function (
   email: string,
   password: string,
   isBlocked: boolean = false,
-  isChecked: boolean = false
+  isChecked: boolean = false,
+  lastSignin: number = Date.now()
 ) {
   if (!email || !password) {
     throw Error('All fields must be filled');
@@ -59,6 +64,7 @@ userSchema.statics.signup = async function (
     password: hash,
     isBlocked,
     isChecked,
+    lastSignin,
   });
 
   return user;
@@ -73,6 +79,10 @@ userSchema.statics.signin = async function (email: string, password: string) {
 
   if (!user) {
     throw Error('Incorrect email');
+  }
+
+  if (user.isBlocked) {
+    throw Error('User is blocked');
   }
 
   const match = await bcrypt.compare(password, user.password);

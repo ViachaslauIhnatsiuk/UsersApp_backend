@@ -5,8 +5,11 @@ import {
   deleteUser,
   updateUser,
 } from '../controllers/userController';
+const requireAuth = require('../middleware/requireAuth');
 
 const usersRoutes = Router();
+
+usersRoutes.use(requireAuth);
 
 usersRoutes.get('/', getUsers);
 
